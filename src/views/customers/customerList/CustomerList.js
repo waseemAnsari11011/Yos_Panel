@@ -19,12 +19,13 @@ import {
   CTableDataCell,
   CFormSelect,
   CSpinner,
-  CAlert
-
+  CAlert,
+  CFormSwitch
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilPencil, cilTrash, cilCloudUpload, cilBan, cilLockUnlocked } from '@coreui/icons'
 import { restrictCustomer, unRestrictCustomer } from '../../../api/customer/restrictUnrestrict';
+import activeDiscountApi from '../../../api/customer/makeDiscountActive';
 
 const CustomerList = () => {
   const dispatch = useDispatch()
@@ -79,6 +80,29 @@ const CustomerList = () => {
     }
   }
 
+  const handleSwitchToggle = async (customerId) => {
+    try {
+      const updatedCustomers = customers.map((customer) =>
+        customer._id === customerId ? { ...customer, isDiscountVisible: !customer.isDiscountVisible } : customer
+      )
+      setCustomers(updatedCustomers)
+      await getactionapi(customerId, !customers.find(b => b._id === customerId).isDiscountVisible)
+    } catch (error) {
+      console.error('Failed to toggle switch:', error)
+    }
+  }
+
+  const getactionapi = async (id, isDiscountVisible) => {
+    try {
+      setAlertVisible(true)
+      setAlertMessage('success')
+      // dispatch(startLoading());
+      const response = await activeDiscountApi(id, isDiscountVisible);
+      console.log(response);
+    } catch (error) {
+    }
+  };
+
 
   return (
     <div style={{ overflowX: 'auto' }}>
@@ -91,11 +115,10 @@ const CustomerList = () => {
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell>Name</CTableHeaderCell>
-            <CTableHeaderCell>Email</CTableHeaderCell>
             <CTableHeaderCell>Phone</CTableHeaderCell>
             <CTableHeaderCell>Address</CTableHeaderCell>
-            <CTableHeaderCell>Pincode</CTableHeaderCell>
             <CTableHeaderCell>Actions</CTableHeaderCell>
+            <CTableHeaderCell>Give Discount</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -103,10 +126,8 @@ const CustomerList = () => {
             <CTableRow key={index}>
 
               <CTableDataCell>{customer.name}</CTableDataCell>
-              <CTableDataCell>{customer.email}</CTableDataCell>
               <CTableDataCell>{customer.contactNumber}</CTableDataCell>
-              <CTableDataCell>{customer?.shippingAddresses?.[0]?.address}</CTableDataCell>
-              <CTableDataCell>{customer?.availableLocalities}</CTableDataCell>
+              <CTableDataCell>{customer?.companyAddresses}</CTableDataCell>
               <CTableDataCell>
                 <div className='actions-cell'>
                   {!customer.isRestricted ? <CButton style={{ margin: '0.25rem' }} disabled color="warning" onClick={() => handleUnRestrict(customer._id)}>
@@ -121,6 +142,15 @@ const CustomerList = () => {
                   </CButton>}
                 </div>
               </CTableDataCell>
+              <CTableDataCell>
+                <CFormSwitch
+                  label=""
+                  id={`formSwitch-${customer._id}`}
+                  checked={customer.isDiscountVisible}
+                  onChange={() => handleSwitchToggle(customer._id)}
+                />
+              </CTableDataCell>
+
             </CTableRow>
           ))}
         </CTableBody>
