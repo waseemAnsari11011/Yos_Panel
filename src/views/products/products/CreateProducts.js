@@ -47,7 +47,7 @@ const Products = () => {
         price: '',
         description: '',
         images: [],
-        discount: '',
+        discountPrice: '',
         category: '',
         vendor,
         availableLocalities: [],
@@ -121,7 +121,7 @@ const Products = () => {
 
     const toggleModal = () => {
         if (editingProduct !== null) {
-            setForm({ name: '', quantity: '', price: '', images: [], description: '', discount: '', category: '', vendor, availableLocalities: [] })
+            setForm({ name: '', quantity: '', price: '', images: [], description: '', discountPrice: '', category: '', vendor, availableLocalities: [] })
             setPincodes([])
             setIsAllSelected(false)
             setEditingProduct(null)
@@ -161,7 +161,7 @@ const Products = () => {
 
                 // setProducts([...products, form])
             }
-            setForm({ name: '', quantity: '', price: '', images: [], description: '', discount: '', category: '', vendor, availableLocalities: [] })
+            setForm({ name: '', quantity: '', price: '', images: [], description: '', discountPrice: '', category: '', vendor, availableLocalities: [] })
             setPincodes([])
             setIsAllSelected(false)
             setEditingProduct(null)
@@ -256,7 +256,7 @@ const Products = () => {
                                 <CTableDataCell>{product.name}</CTableDataCell>
                                 <CTableDataCell>{product.description}</CTableDataCell>
                                 <CTableDataCell>{product.price}</CTableDataCell>
-                                <CTableDataCell>{product.discount}</CTableDataCell>
+                                <CTableDataCell>{product.discountPrice}</CTableDataCell>
                                 <CTableDataCell >
                                     <div className='actions-cell'>
                                         <CButton color="warning" onClick={() => handleEdit(index, product._id)}>
@@ -381,9 +381,9 @@ const Products = () => {
                             onChange={handleChange}
                         />
                         <CFormInput
-                            name="discount"
-                            label="Product Discount"
-                            value={form.discount}
+                            name="discountPrice"
+                            label="Discount Price"
+                            value={form.discountPrice}
                             onChange={handleChange}
                         />
                         <CFormInput
