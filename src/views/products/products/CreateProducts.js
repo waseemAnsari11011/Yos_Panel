@@ -313,7 +313,7 @@ const Products = () => {
                                 </div>
                             ))}
                         </div>
-                        <div>
+                        {/* <div>
                             <CFormCheck
                                 type="checkbox"
                                 id="selectAll"
@@ -359,7 +359,7 @@ const Products = () => {
                                     </div>
                                 </>
                             )}
-                        </div>
+                        </div> */}
                         {/* Dropdown to select category */}
                         <CFormSelect
                             name="category"

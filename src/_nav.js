@@ -24,16 +24,16 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 
 const _nav = [
-  {
-    component: CNavItem,
-    name: 'Overview',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    // badge: {
-    //   color: 'info',
-    //   text: 'NEW',
-    // },
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Overview',
+  //   to: '/dashboard',
+  //   icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  //   // badge: {
+  //   //   color: 'info',
+  //   //   text: 'NEW',
+  //   // },
+  // },
   {
     component: CNavTitle,
     name: 'Manage',
@@ -57,38 +57,38 @@ const _nav = [
       
     ],
   },
-  {
-    component: CNavGroup,
-    name: 'Orders',
-    to: '/orders',
-    icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Orders',
-        to: '/orders/all-orders',
-      },
-      // {
-      //   component: CNavItem,
-      //   name: 'Refunds',
-      //   to: '/orders/refund',
-      // }
+  // {
+  //   component: CNavGroup,
+  //   name: 'Orders',
+  //   to: '/orders',
+  //   icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Orders',
+  //       to: '/orders/all-orders',
+  //     },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: 'Refunds',
+  //     //   to: '/orders/refund',
+  //     // }
       
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Vendors',
-    to: '/vendor',
-    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Vendors List',
-        to: '/vendor/list',
-      },
-    ],
-  },
+  //   ],
+  // },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Vendors',
+  //   to: '/vendor',
+  //   icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Vendors List',
+  //       to: '/vendor/list',
+  //     },
+  //   ],
+  // },
   {
     component: CNavGroup,
     name: 'Customers',
@@ -115,28 +115,28 @@ const _nav = [
       },
     ],
   },
-  {
-    component: CNavTitle,
-    name: 'Support',
-  },
-  {
-    component: CNavItem,
-    name: 'Customer Inquiries',
-    to: '/customer-inquiries',
-    icon: <CIcon icon={cilSpeech} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Help Center',
-    to: '/faqs',
-    icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Contact',
-    to: '/contact',
-    icon: <CIcon icon={cilPhone} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavTitle,
+  //   name: 'Support',
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Customer Inquiries',
+  //   to: '/customer-inquiries',
+  //   icon: <CIcon icon={cilSpeech} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Help Center',
+  //   to: '/faqs',
+  //   icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Contact',
+  //   to: '/contact',
+  //   icon: <CIcon icon={cilPhone} customClassName="nav-icon" />,
+  // },
 ]
 
 export default _nav
