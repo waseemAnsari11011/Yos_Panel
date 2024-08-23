@@ -115,10 +115,10 @@ const _nav = [
       },
     ],
   },
-  // {
-  //   component: CNavTitle,
-  //   name: 'Support',
-  // },
+  {
+    component: CNavTitle,
+    name: 'Support',
+  },
   // {
   //   component: CNavItem,
   //   name: 'Customer Inquiries',
@@ -131,12 +131,12 @@ const _nav = [
   //   to: '/faqs',
   //   icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
   // },
-  // {
-  //   component: CNavItem,
-  //   name: 'Contact',
-  //   to: '/contact',
-  //   icon: <CIcon icon={cilPhone} customClassName="nav-icon" />,
-  // },
+  {
+    component: CNavItem,
+    name: 'Contact',
+    to: '/contact',
+    icon: <CIcon icon={cilPhone} customClassName="nav-icon" />,
+  },
 ]
 
 export default _nav
