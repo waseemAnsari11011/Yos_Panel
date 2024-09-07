@@ -147,6 +147,8 @@ const Products = () => {
 
             if (editingProduct !== null) {
 
+                console.log("form==>>",form )
+
 
                 await updateProduct(productId, form);
 

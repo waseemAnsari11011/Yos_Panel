@@ -7,7 +7,7 @@ const updateProduct = async (id, productData) => {
   formData.append('name', productData.name);
   formData.append('quantity', productData.quantity);
   formData.append('price', productData.price);
-  formData.append('discount', productData.discount);
+  formData.append('discount', productData.discountPrice);
   formData.append('description', productData.description);
   formData.append('category', productData.category);
   formData.append('vendor', productData.vendor);
