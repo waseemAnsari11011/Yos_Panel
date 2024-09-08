@@ -249,7 +249,7 @@ const Products = () => {
                                     {product.images.slice(0, 2).map((file, imgIndex) => (
                                         <img
                                             key={imgIndex}
-                                            src={`${baseURL}/${file}`}
+                                            src={file}
                                             alt={`Product Image ${imgIndex + 1}`}
                                             className="table-img"
                                         />
@@ -308,7 +308,7 @@ const Products = () => {
                                 <div key={index} className="image-wrapper">
                                     <img
                                         className="img"
-                                        src={typeof file === 'string' ? `${baseURL}/${file}` : URL.createObjectURL(file)}
+                                        src={typeof file === 'string' ? file : URL.createObjectURL(file)}
                                         alt={`Product Image ${index + 1}`}
                                     />
                                     <button type="button" className="close-button" onClick={() => removeImage(index)}>✖</button>

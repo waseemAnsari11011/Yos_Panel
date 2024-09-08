@@ -231,7 +231,7 @@ const Banner = ({ banner }) => {
                   {banner.images.map((file, imgIndex) => (
                     <img
                       key={imgIndex}
-                      src={`${baseURL}/${file}`}
+                      src={file}
                       alt={`Category Image ${imgIndex + 1}`}
                       className="table-img"
                     />
@@ -282,7 +282,7 @@ const Banner = ({ banner }) => {
                   <img
                     className="img"
                     src={
-                      typeof file === 'string' ? `${baseURL}/${file}` : URL.createObjectURL(file)
+                      typeof file === 'string' ? file : URL.createObjectURL(file)
                     }
                     alt={`Category Image ${index + 1}`}
                   />
