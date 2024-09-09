@@ -103,39 +103,6 @@ const WidgetsDropdown = (props) => {
     fetchSalesData();
   }, []);
 
-  useEffect(() => {
-    switch (selectedPeriod) {
-      case 'today':
-        setDisplayedSales(salesData.totalSalesToday);
-        break;
-      case 'thisWeek':
-        setDisplayedSales(salesData.totalSalesThisWeek);
-        break;
-      case 'thisMonth':
-        setDisplayedSales(salesData.totalSalesThisMonth);
-        break;
-      default:
-        setDisplayedSales(0);
-    }
-  }, [selectedPeriod, salesData]);
-
-  useEffect(() => {
-    switch (selectedPeriodOrdersCount) {
-      case 'today':
-        setDisplayedOrdersCount(orderCountData.ordersToday);
-        break;
-      case 'thisWeek':
-        setDisplayedOrdersCount(orderCountData.ordersThisWeek);
-        break;
-      case 'thisMonth':
-        setDisplayedOrdersCount(orderCountData.ordersThisMonth);
-        break;
-      default:
-        setDisplayedOrdersCount(0);
-    }
-  }, [selectedPeriodOrdersCount, orderCountData]);
-
-
 
   useEffect(() => {
     document.documentElement.addEventListener('ColorSchemeChange', () => {
@@ -162,19 +129,7 @@ const WidgetsDropdown = (props) => {
         <CWidgetStatsA
           color="primary"
           value={<>{displayedSales} </>}
-          title="Total Sales"
-          action={
-            <CDropdown alignment="end">
-              <CDropdownToggle color="transparent" caret={false} className="text-white p-0">
-                <CIcon icon={cilOptions} />
-              </CDropdownToggle>
-              <CDropdownMenu>
-                <CDropdownItem onClick={() => setSelectedPeriod('today')}>today</CDropdownItem>
-                <CDropdownItem onClick={() => setSelectedPeriod('thisWeek')}>this week</CDropdownItem>
-                <CDropdownItem onClick={() => setSelectedPeriod('thisMonth')}>this month</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
-          }
+          title="Total Products"
           chart={
             <CChartLine
               className="mt-3 mx-3"
@@ -243,19 +198,7 @@ const WidgetsDropdown = (props) => {
         <CWidgetStatsA
           color="info"
           value={<>{displayedSales} </>}
-          title="Total Income"
-          action={
-            <CDropdown alignment="end">
-              <CDropdownToggle color="transparent" caret={false} className="text-white p-0">
-                <CIcon icon={cilOptions} />
-              </CDropdownToggle>
-              <CDropdownMenu>
-                <CDropdownItem onClick={() => setSelectedPeriod('today')}>today</CDropdownItem>
-                <CDropdownItem onClick={() => setSelectedPeriod('thisWeek')}>this week</CDropdownItem>
-                <CDropdownItem onClick={() => setSelectedPeriod('thisMonth')}>this month</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
-          }
+          title="Total Categories"
           chart={
             <CChartLine
               className="mt-3 mx-3"
@@ -323,19 +266,7 @@ const WidgetsDropdown = (props) => {
         <CWidgetStatsA
           color="warning"
           value={<>{displayedOrdersCount} </>}
-          title="Number of Orders"
-          action={
-            <CDropdown alignment="end">
-              <CDropdownToggle color="transparent" caret={false} className="text-white p-0">
-                <CIcon icon={cilOptions} />
-              </CDropdownToggle>
-              <CDropdownMenu>
-                <CDropdownItem onClick={() => setSelectedPeriodOrdersCount('today')}>today</CDropdownItem>
-                <CDropdownItem onClick={() => setSelectedPeriodOrdersCount('thisWeek')}>this week</CDropdownItem>
-                <CDropdownItem onClick={() => setSelectedPeriodOrdersCount('thisMonth')}>this month</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
-          }
+          title="Total Customer"
           chart={
             <CChartLine
               className="mt-3"

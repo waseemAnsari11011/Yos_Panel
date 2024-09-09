@@ -167,7 +167,7 @@ const Dashboard = () => {
 
       <CRow>
         <CCol xs>
-          <CCard className="mb-4">
+          {/* <CCard className="mb-4">
             <CCardHeader>Recent Orders</CCardHeader>
             <CCardBody>
               <CTable striped hover responsive>
@@ -219,15 +219,14 @@ const Dashboard = () => {
                           return total + discountedPrice;
                         }, 0).toFixed(2)}
                       </CTableDataCell>
-                      {/* <CTableDataCell>{order.isPaymentVerified ? "Paid" : "UnPaid"}</CTableDataCell> */}
 
                     </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>
             </CCardBody>
-          </CCard>
-          <CCard className="mb-4">
+          </CCard> */}
+          {/* <CCard className="mb-4">
             <CCardHeader>Low Stock Inventory</CCardHeader>
             <CCardBody>
               <CTable striped>
@@ -285,7 +284,6 @@ const Dashboard = () => {
                     <CTableHeaderCell>Message</CTableHeaderCell>
                     <CTableHeaderCell>Response</CTableHeaderCell>
                     <CTableHeaderCell>Status</CTableHeaderCell>
-                    {/* <CTableHeaderCell>Actions</CTableHeaderCell> */}
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -296,15 +294,12 @@ const Dashboard = () => {
                       <CTableDataCell>{inquiry.message}</CTableDataCell>
                       <CTableDataCell>{inquiry.response}</CTableDataCell>
                       <CTableDataCell> <CBadge color={getBadgeColor(inquiry.status)}>{inquiry.status}</CBadge></CTableDataCell>
-                      {/* <CTableDataCell>
-                        <CButton color="primary" onClick={() => toggleModal(inquiry._id)}>Send Response</CButton>
-                      </CTableDataCell> */}
                     </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>
             </CCardBody>
-          </CCard>}
+          </CCard>} */}
         </CCol>
       </CRow>
     </>
