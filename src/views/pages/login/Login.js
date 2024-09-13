@@ -54,6 +54,8 @@ const Login = () => {
         password
       });
 
+      console.log("response==>>", response.data)
+
       if (response.status === 200) {
         setAlertMessage('Login successful!');
         setAlertColor('success');
