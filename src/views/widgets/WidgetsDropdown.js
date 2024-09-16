@@ -1,327 +1,87 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import {
   CRow,
   CCol,
-  CDropdown,
-  CDropdownMenu,
-  CDropdownItem,
-  CDropdownToggle,
   CWidgetStatsA,
 } from '@coreui/react'
-import { getStyle } from '@coreui/utils'
-import { CChartBar, CChartLine } from '@coreui/react-chartjs'
-import CIcon from '@coreui/icons-react'
-import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
-import { getTotalSales, getMonthlySales, getOrdersCount , getMonthlyOrderCounts} from '../../api/report/salesReports'
-
+import { getTotalProducts, getTotalCategories, getTotalCustomers } from '../../api/report/salesReports'
 
 const WidgetsDropdown = (props) => {
-  const widgetChartRef1 = useRef(null)
-  const widgetChartRef2 = useRef(null)
-  const [salesData, setSalesData] = useState({
-    totalSalesToday: 0,
-    totalSalesThisWeek: 0,
-    totalSalesThisMonth: 0,
-  });
-  const [orderCountData, setOrderCountData] = useState({
-    ordersToday: 0,
-    ordersThisWeek: 0,
-    ordersThisMonth: 0,
-  });
-  const [selectedPeriod, setSelectedPeriod] = useState('today');
-  const [selectedPeriodOrdersCount, setSelectedPeriodOrdersCount] = useState('today');
-
-  const [displayedSales, setDisplayedSales] = useState(0);
-  const [monthlySalesData, setMonthlySalesData] = useState({
-    labels: [],
-    data: [],
-  });
-  const [monthlyOrdersCountData, setMonthlyOrdersCountData] = useState({
-    labels: [],
-    data: [],
-  });
-
-  const [displayedOrdersCount, setDisplayedOrdersCount] = useState(0);
-
-
-  
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalCategories, setTotalCategories] = useState(0);
+  const [totalCustomers, setTotalCustomers] = useState(0);
 
   useEffect(() => {
-    const fetchOrdersCount = async () => {
+    // Fetch total products count
+    const fetchTotalProducts = async () => {
       try {
-        const data = await getOrdersCount();
-        setOrderCountData(data);
-        setDisplayedOrdersCount(data.ordersToday);
+        const data = await getTotalProducts();
+        setTotalProducts(data.totalProducts);
       } catch (error) {
-        console.error('Failed to fetch sales data', error);
+        console.error('Failed to fetch total products count', error);
       }
     };
 
-    fetchOrdersCount();
-  }, []);
-
-
-  useEffect(() => {
-    const fetchSalesData = async () => {
+    // Fetch total categories count
+    const fetchTotalCategories = async () => {
       try {
-        const data = await getMonthlySales();
-        setMonthlySalesData(data);
+        const data = await getTotalCategories();
+        setTotalCategories(data.totalCategories);
       } catch (error) {
-        console.error('Failed to fetch sales data', error);
+        console.error('Failed to fetch total categories count', error);
       }
     };
 
-    fetchSalesData();
-  }, []);
-
-  useEffect(() => {
-    const fetchMonthlyOrdersCountData = async () => {
+    // Fetch total customers count
+    const fetchTotalCustomers = async () => {
       try {
-        const data = await getMonthlyOrderCounts();
-        setMonthlyOrdersCountData(data);
+        const data = await getTotalCustomers();
+        setTotalCustomers(data.totalCustomers);
       } catch (error) {
-        console.error('Failed to fetch sales data', error);
+        console.error('Failed to fetch total customers count', error);
       }
     };
 
-    fetchMonthlyOrdersCountData();
+    // Call the functions to fetch the data
+    fetchTotalProducts();
+    fetchTotalCategories();
+    fetchTotalCustomers();
   }, []);
-
-  useEffect(() => {
-    const fetchSalesData = async () => {
-      try {
-        const data = await getTotalSales();
-        setSalesData(data);
-        setDisplayedSales(data.totalSalesToday); // Default display today's sales
-      } catch (error) {
-        console.error('Failed to fetch sales data', error);
-      }
-    };
-
-    fetchSalesData();
-  }, []);
-
-
-  useEffect(() => {
-    document.documentElement.addEventListener('ColorSchemeChange', () => {
-      if (widgetChartRef1.current) {
-        setTimeout(() => {
-          widgetChartRef1.current.data.datasets[0].pointBackgroundColor = getStyle('--cui-primary')
-          widgetChartRef1.current.update()
-        })
-      }
-
-      if (widgetChartRef2.current) {
-        setTimeout(() => {
-          widgetChartRef2.current.data.datasets[0].pointBackgroundColor = getStyle('--cui-info')
-          widgetChartRef2.current.update()
-        })
-      }
-    })
-  }, [widgetChartRef1, widgetChartRef2])
 
   return (
     <CRow className={props.className} xs={{ gutter: 4 }}>
       <CCol sm={6} xl={4} xxl={3}>
-
         <CWidgetStatsA
           color="primary"
-          value={<>{displayedSales} </>}
+          value={<>{totalProducts}</>}
           title="Total Products"
-          chart={
-            <CChartLine
-              className="mt-3 mx-3"
-              style={{ height: '70px' }}
-              data={{
-                labels: monthlySalesData.labels,
-                datasets: [
-                  {
-                    label: 'Monthly Sales',
-                    backgroundColor: 'transparent',
-                    borderColor: 'rgba(255,255,255,.55)',
-                    pointBackgroundColor: getStyle('--cui-primary'),
-                    data: monthlySalesData.data,
-                  },
-                ],
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    display: false,
-                  },
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  x: {
-                    border: {
-                      display: false,
-                    },
-                    grid: {
-                      display: false,
-                      drawBorder: false,
-                    },
-                    ticks: {
-                      display: false,
-                    },
-                  },
-                  y: {
-                    min: 0,
-                    display: false,
-                    grid: {
-                      display: false,
-                    },
-                    ticks: {
-                      display: false,
-                    },
-                  },
-                },
-                elements: {
-                  line: {
-                    borderWidth: 1,
-                    tension: 0.4,
-                  },
-                  point: {
-                    radius: 4,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                  },
-                },
-              }}
-            />
-          }
+          chart={null} // Removed the chart as it's no longer needed
         />
-
       </CCol>
       <CCol sm={6} xl={4} xxl={3}>
         <CWidgetStatsA
           color="info"
-          value={<>{displayedSales} </>}
+          value={<>{totalCategories}</>}
           title="Total Categories"
-          chart={
-            <CChartLine
-              className="mt-3 mx-3"
-              style={{ height: '70px' }}
-              data={{
-                labels: monthlySalesData.labels,
-                datasets: [
-                  {
-                    label: 'Monthly Sales',
-                    backgroundColor: 'transparent',
-                    borderColor: 'rgba(255,255,255,.55)',
-                    pointBackgroundColor: getStyle('--cui-info'),
-                    data: monthlySalesData.data,
-                  },
-                ],
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    display: false,
-                  },
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  x: {
-                    border: {
-                      display: false,
-                    },
-                    grid: {
-                      display: false,
-                      drawBorder: false,
-                    },
-                    ticks: {
-                      display: false,
-                    },
-                  },
-                  y: {
-                    min: 0,
-                    display: false,
-                    grid: {
-                      display: false,
-                    },
-                    ticks: {
-                      display: false,
-                    },
-                  },
-                },
-                elements: {
-                  line: {
-                    borderWidth: 1,
-                    tension: 0.4,
-                  },
-                  point: {
-                    radius: 4,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                  },
-                },
-              }}
-            />
-          }
+          chart={null} // Removed the chart as it's no longer needed
         />
       </CCol>
       <CCol sm={6} xl={4} xxl={3}>
         <CWidgetStatsA
           color="warning"
-          value={<>{displayedOrdersCount} </>}
-          title="Total Customer"
-          chart={
-            <CChartLine
-              className="mt-3"
-              style={{ height: '70px' }}
-              data={{
-                labels: monthlyOrdersCountData.labels,
-                datasets: [
-                  {
-                    label: 'My First dataset',
-                    backgroundColor: 'rgba(255,255,255,.2)',
-                    borderColor: 'rgba(255,255,255,.55)',
-                    data: monthlyOrdersCountData.data,
-                    fill: true,
-                  },
-                ],
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    display: false,
-                  },
-                },
-                maintainAspectRatio: false,
-                scales: {
-                  x: {
-                    display: false,
-                  },
-                  y: {
-                    display: false,
-                  },
-                },
-                elements: {
-                  line: {
-                    borderWidth: 2,
-                    tension: 0.4,
-                  },
-                  point: {
-                    radius: 0,
-                    hitRadius: 10,
-                    hoverRadius: 4,
-                  },
-                },
-              }}
-            />
-          }
+          value={<>{totalCustomers}</>}
+          title="Total Customers"
+          chart={null} // Removed the chart as it's no longer needed
         />
       </CCol>
-
     </CRow>
-  )
+  );
 }
 
 WidgetsDropdown.propTypes = {
   className: PropTypes.string,
-  withCharts: PropTypes.bool,
 }
 
 export default WidgetsDropdown

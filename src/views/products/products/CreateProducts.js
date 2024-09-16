@@ -31,6 +31,7 @@ import updateProduct from '../../../api/product/updateProduct';
 import deleteProduct from '../../../api/product/deleteProduct';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoading, stopLoading } from '../../../store';
+import exportTableToExcel from '../../../utils/exportTableToExcel';
 
 
 const Products = () => {
@@ -38,7 +39,7 @@ const Products = () => {
     const isLoading = useSelector((state) => state.loading)
     const user = useSelector((state) => state.user)
     const vendor = user._id
-    
+
     const [products, setProducts] = useState([])
     const [modal, setModal] = useState(false)
     const [editingProduct, setEditingProduct] = useState(null)
@@ -60,28 +61,16 @@ const Products = () => {
     const [isAllSelected, setIsAllSelected] = useState(false);
 
 
-    //pincode
-    const handleAddPincode = () => {
-        if (pincode && !pincodes.includes(pincode)) {
-            setPincodes([...pincodes, pincode]);
-            setPincode('');
-            setForm({ ...form, availableLocalities: [...pincodes, pincode] });
 
-        }
-    };
 
-    const handleRemovePincode = (code) => {
-        setPincodes(pincodes.filter(p => p !== code));
-        setForm({ ...form, availableLocalities: form.availableLocalities.filter(p => p !== code) });
-    };
 
-    const handleAllChange = () => {
-        setIsAllSelected(!isAllSelected);
-        if (!isAllSelected) {
-            setPincodes(['all']); // Clear pincodes if "all" is selected
-            setForm({ ...form, availableLocalities: ['all'] });
-        }
-    };
+    const columns = [
+        { label: 'Photo', accessor: (row) => row.images.map(img => img).join(', ') },  // Handling multiple images
+        { label: 'Name', accessor: (row) => row.name },
+        { label: 'Description', accessor: (row) => row.description },
+        { label: 'Price', accessor: (row) => row.price },
+        { label: 'Discount', accessor: (row) => row.discountPrice },
+    ];
 
 
 
@@ -147,7 +136,7 @@ const Products = () => {
 
             if (editingProduct !== null) {
 
-                console.log("form==>>",form )
+                console.log("form==>>", form)
 
 
                 await updateProduct(productId, form);
@@ -225,9 +214,13 @@ const Products = () => {
     return (
         <div>
             <h2>Manage Products</h2>
-            <div className="mb-4">
-                <CButton color="primary" onClick={toggleModal}>Add Product</CButton>
+            <div style={styles.filterContainer}>
+                <button onClick={toggleModal} style={styles.button}>Add Product</button>
+                <button onClick={() => exportTableToExcel(products, columns, 'ProductsData')} style={{ ...styles.button, backgroundColor: '#6c757d' }}>Export to Excel</button>
+
             </div>
+
+
             {isLoading ? <div className="spinner-container">
                 <CSpinner size="sm" color="blue" />
             </div> : <div style={{ overflowX: 'auto' }}>
@@ -315,53 +308,7 @@ const Products = () => {
                                 </div>
                             ))}
                         </div>
-                        {/* <div>
-                            <CFormCheck
-                                type="checkbox"
-                                id="selectAll"
-                                label="All Locations"
-                                checked={isAllSelected}
-                                onChange={handleAllChange}
-                            />
 
-                            {!isAllSelected && (
-                                <>
-                                    <CRow>
-                                        <CCol xs={8}>
-                                            <CFormInput
-                                                type="text"
-                                                value={pincode}
-                                                onChange={(e) => setPincode(e.target.value)}
-                                                placeholder="Enter pincode"
-                                                disabled={isAllSelected}
-                                            />
-                                        </CCol>
-                                        <CCol xs={4}>
-                                            <CButton color="primary" onClick={handleAddPincode} disabled={isAllSelected}>
-                                                Add Pincode
-                                            </CButton>
-                                        </CCol>
-                                    </CRow>
-
-                                    <div style={{ marginTop: '1rem' }}>
-                                        {pincodes.map((code, index) => (
-                                            <CBadge key={index} color="secondary" className="pincode-badge">
-                                                {code}
-                                                <CButton
-                                                    color="danger"
-                                                    size="sm"
-                                                    variant="outline"
-                                                    onClick={() => handleRemovePincode(code)}
-                                                    style={{ marginLeft: '0.5rem' }}
-                                                >
-                                                    &times;
-                                                </CButton>
-                                            </CBadge>
-                                        ))}
-                                    </div>
-                                </>
-                            )}
-                        </div> */}
                         {/* Dropdown to select category */}
                         <CFormSelect
                             name="category"
@@ -408,5 +355,23 @@ const Products = () => {
         </div>
     )
 }
+
+const styles = {
+    filterContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '20px',
+        gap: '10px',
+    },
+
+    button: {
+        padding: '5px 10px',
+        backgroundColor: '#007bff',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+    }
+};
 
 export default Products

@@ -1,42 +1,34 @@
 import axiosInstance from "../../utils/axiosConfig";
 
-export const getTotalSales = async () => {
+// Get total count of products
+export const getTotalProducts = async () => {
     try {
-        const response = await axiosInstance.get('/get-sales');
+        const response = await axiosInstance.get('/get-total-products');
         return response.data;
     } catch (error) {
-        console.error('Error fetching total sales data', error);
+        console.error('Error fetching total products count', error);
         throw error;
     }
 };
 
-export const getMonthlySales = async () => {
+// Get total count of categories
+export const getTotalCategories = async () => {
     try {
-        const response = await axiosInstance.get('/monthly-sales');
+        const response = await axiosInstance.get('/get-total-categories');
         return response.data;
     } catch (error) {
-        console.error('Error fetching monthly sales data', error);
+        console.error('Error fetching total categories count', error);
         throw error;
     }
 };
 
-export const getOrdersCount = async () => {
+// Get total count of customers
+export const getTotalCustomers = async () => {
     try {
-        const response = await axiosInstance.get('/orders-counts');
+        const response = await axiosInstance.get('/get-total-customers');
         return response.data;
     } catch (error) {
-        console.error('Error fetching orders count data', error);
+        console.error('Error fetching total customers count', error);
         throw error;
     }
 };
-
-export const getMonthlyOrderCounts = async () => {
-    try {
-        const response = await axiosInstance.get('/monthly-orders-counts');
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching monthly orders count', error);
-        throw error;
-    }
-};
-

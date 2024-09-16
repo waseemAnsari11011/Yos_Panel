@@ -26,6 +26,7 @@ import updateCategory from '../../../api/category/updateCategory'
 import deleteCategory from '../../../api/category/deleteCategory'
 import { useDispatch, useSelector } from 'react-redux'
 import { startLoading, stopLoading } from '../../../store'
+import exportTableToExcel from '../../../utils/exportTableToExcel'
 
 const Categories = () => {
   const dispatch = useDispatch()
@@ -163,14 +164,21 @@ const Categories = () => {
     }
   }
 
+  const columns = [
+    { label: 'Category Photo', accessor: (row) => row.images.join(', ') }, // Adjust accessor as needed
+    { label: 'Category Name', accessor: (row) => row.name },
+    // Add any other columns you need here
+  ];
+
   return (
     <div>
       <h2>Manage Product Categories</h2>
-      <div className="mb-4">
-        <CButton color="primary" onClick={toggleModal}>
-          Add Category
-        </CButton>
+      <div style={styles.filterContainer}>
+        <button onClick={toggleModal} style={styles.button}>Add Category</button>
+        <button onClick={() => exportTableToExcel(categories, columns, 'Categories')} style={{ ...styles.button, backgroundColor: '#6c757d' }}>Export to Excel</button>
+
       </div>
+
       {isLoading ? (
         <div className="spinner-container">
           <CSpinner size="sm" color="blue" />
@@ -269,5 +277,23 @@ const Categories = () => {
     </div>
   )
 }
+
+const styles = {
+  filterContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '20px',
+    gap: '10px',
+  },
+
+  button: {
+    padding: '5px 10px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  }
+};
 
 export default Categories
